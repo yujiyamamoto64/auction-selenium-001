@@ -5,6 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import br.com.alura.leilao.lances.LancesPage;
+
 public class LoginTest {
 	
 	private LoginPage loginPage;
@@ -21,29 +23,28 @@ public class LoginTest {
 
 	@Test
 	public void should_login_with_valid_data() {
-		loginPage.fillLoginForm("fulano", "pass");
-		loginPage.login();
+		loginPage.login("fulano", "pass");
 		
-		Assert.assertFalse(loginPage.isLoginPage());
-		Assert.assertEquals("fulano", loginPage.getUserLoggedName());
+		String usernameLogged = (String) loginPage.getUserLoggedName();
+		Assert.assertEquals("fulano", usernameLogged);
+		Assert.assertFalse(loginPage.isACtualPage());
 	}
 	
 	@Test
-	public void should_not_login_with_invalid_data() throws InterruptedException {
-		loginPage.fillLoginForm("invalid", "321");
-		loginPage.login();
+	public void should_not_login_with_invalid_data() {
+		loginPage.login("invalid", "321");
 		
-		Assert.assertTrue(loginPage.isLoginErrorPage());
 		Assert.assertNull(loginPage.getUserLoggedName());
-		Assert.assertTrue(loginPage.containsText("Usuário e senha inválidos."));
+		Assert.assertTrue(loginPage.isACtualPage());
+		Assert.assertTrue(loginPage.isLoginErrorMsgVisible());
 	}
 	
 	@Test
 	public void should_not_access_restrict_page_if_not_logged() {
-		loginPage.goToLeiloesPage();
+		LancesPage lancesPage = new LancesPage();
 		
-		Assert.assertTrue(loginPage.isLoginPage());
-		Assert.assertFalse(loginPage.containsText("Dados do Leilão"));
-
+		Assert.assertFalse(lancesPage.isActualPage());
+		Assert.assertFalse(lancesPage.isLeilaoTitleVisible());
+		lancesPage.quit();
 	}
 }

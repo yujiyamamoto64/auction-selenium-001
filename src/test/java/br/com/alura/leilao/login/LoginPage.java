@@ -2,24 +2,17 @@ package br.com.alura.leilao.login;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
+import br.com.alura.leilao.PageObject;
 import br.com.alura.leilao.leiloes.LeiloesPage;
 
-public class LoginPage {
+public class LoginPage extends PageObject {
 
 	private static final String URL_LOGIN = "http://localhost:8080/login";
-	private WebDriver browser;
 
 	public LoginPage() {
-		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
-		this.browser = new ChromeDriver();
+		super(null);
 		browser.navigate().to(URL_LOGIN);
-	}
-
-	public void quit() {
-		this.browser.quit();
 	}
 
 	public void fillLoginForm(String username, String password) {
@@ -27,13 +20,14 @@ public class LoginPage {
 		browser.findElement(By.id("password")).sendKeys(password);
 	}
 
-	public LeiloesPage login() {
+	public LeiloesPage login(String username, String password) {
+		this.fillLoginForm(username, password);
 		browser.findElement(By.id("login-form")).submit();
 		return new LeiloesPage(browser);
 	}
 
-	public boolean isLoginPage() {
-		return browser.getCurrentUrl().equals(URL_LOGIN);
+	public boolean isACtualPage() {
+		return browser.getCurrentUrl().contains(URL_LOGIN);
 	}
 
 	public Object getUserLoggedName() {
@@ -54,6 +48,10 @@ public class LoginPage {
 
 	public boolean isLoginErrorPage() {
 		return browser.getCurrentUrl().equals(URL_LOGIN + "?error");
+	}
+	
+	public boolean isLoginErrorMsgVisible() {
+		return browser.getPageSource().contains("Usuário e senha inválidos");
 	}
 
 }

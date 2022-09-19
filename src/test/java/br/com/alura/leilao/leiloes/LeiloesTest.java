@@ -18,14 +18,14 @@ public class LeiloesTest {
 	@BeforeEach
 	public void beforeEach() {
 		LoginPage loginPage = new LoginPage();
-		loginPage.fillLoginForm("fulano", "pass");
-		this.leiloesPage = loginPage.login();
+		this.leiloesPage = loginPage.login("fulano", "pass");
 		this.registerPage = leiloesPage.loadForm();
 	}
 	
 	@AfterEach
 	public void afterEach() {
 		this.leiloesPage.quit();
+		this.registerPage.quit();
 	}
 
 	@Test
@@ -34,13 +34,13 @@ public class LeiloesTest {
 		String name = "Leilao do dia " + today;
 		String value = "500.00";
 		
-		this.leiloesPage = leiloesPage.registerLeilao(name, value, today);
+		this.leiloesPage = registerPage.registerLeilao(name, value, today);
 		Assert.assertTrue(leiloesPage.isLeilaoRegistered(name, value, today));
 	}
 	
 	@Test
 	public void should_validate_leilao_register() {
-		this.leiloesPage = leiloesPage.registerLeilao("", "", "");
+		this.leiloesPage = registerPage.registerLeilao("", "", "");
 		
 		Assert.assertFalse(this.registerPage.isActualPage());
 		Assert.assertTrue(this.leiloesPage.isActualPage());
