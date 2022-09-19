@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import br.com.alura.leilao.login.LoginPage;
@@ -12,6 +13,15 @@ import br.com.alura.leilao.login.LoginPage;
 public class LeiloesTest {
 	
 	private LeiloesPage leiloesPage;
+	private RegisterLeilaoPage registerPage;
+	
+	@BeforeEach
+	public void beforeEach() {
+		LoginPage loginPage = new LoginPage();
+		loginPage.fillLoginForm("fulano", "pass");
+		this.leiloesPage = loginPage.login();
+		this.registerPage = leiloesPage.loadForm();
+	}
 	
 	@AfterEach
 	public void afterEach() {
@@ -20,18 +30,21 @@ public class LeiloesTest {
 
 	@Test
 	public void shold_register_leilao() {
-		LoginPage loginPage = new LoginPage();
-		loginPage.fillLoginForm("fulano", "pass");
-		this.leiloesPage = loginPage.login();
-		leiloesPage.loadForm();
-		RegisterLeilaoPage registerPage	= leiloesPage.loadForm();
-		
 		String today = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		String name = "Leilao do dia " + today;
 		String value = "500.00";
 		
 		this.leiloesPage = leiloesPage.registerLeilao(name, value, today);
 		Assert.assertTrue(leiloesPage.isLeilaoRegistered(name, value, today));
+	}
+	
+	@Test
+	public void should_validate_leilao_register() {
+		this.leiloesPage = leiloesPage.registerLeilao("", "", "");
+		
+		Assert.assertFalse(this.registerPage.isActualPage());
+		Assert.assertTrue(this.leiloesPage.isActualPage());
+		Assert.assertTrue(this.registerPage.isValidationMsgVisible());
 	}
 	
 }

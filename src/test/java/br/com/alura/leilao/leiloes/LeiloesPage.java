@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 public class LeiloesPage {
 
 	private static final String URL_REGISTER_LEILAO = "http://localhost:8080/leiloes/new";
+	private static final Object URL__LEILOES =  "http://localhost:8080/leiloes";
 	private WebDriver browser;
 
 	public LeiloesPage(WebDriver browser) {
@@ -41,6 +42,9 @@ public class LeiloesPage {
 				&& columnValue.getText().equals(value);
 	}
 
-	
+	public boolean isActualPage() {
+		
+		return browser.getCurrentUrl().equals(URL__LEILOES);
+	}
 
 }
