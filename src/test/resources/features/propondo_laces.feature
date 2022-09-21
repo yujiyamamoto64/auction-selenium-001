@@ -4,7 +4,7 @@ Funcionalidade: Propondo lances ao leilao
   
   Cenário: Propondo um unico lance valido
     Dado um lance valido
-    Quando propoe o lance
+    Quando propoe ao leilao
     Entao o lance eh aceito
     
   Cenário: Propondo varios lances validos
@@ -12,3 +12,13 @@ Funcionalidade: Propondo lances ao leilao
   	E um lance de 15.0 reais do usuario "beltrano"
   	Quando propoe varios lances ao leilao
   	Entao os lances sao aceitos
+  	
+  Esquema do Cenário: Propondo um lance invalido
+  	Dado um lance invalido de <valor> reais
+  	Quando propoe ao leilao
+  	Entao o lance nao eh aceito
+  	
+  Exemplos:
+  	| valor |
+  	|  0.0    |
+  	| -1.0    |
