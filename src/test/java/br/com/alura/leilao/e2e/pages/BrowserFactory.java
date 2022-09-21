@@ -7,7 +7,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 public class BrowserFactory {
 
 	public WebDriver createWebDriver() {
-		String webdriver = System.getProperty("browser", "htmlunit");
+		String webdriver = System.getProperty("browser", "chrome");
 		switch (webdriver) {
 		case "chrome":
 			return initChromeDriver();

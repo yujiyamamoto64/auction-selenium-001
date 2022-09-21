@@ -3,6 +3,8 @@ package br.com.alura.leilao.leiloes;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import br.com.alura.leilao.PageObject;
 
@@ -32,7 +34,13 @@ public class LeiloesPage extends PageObject{
 	}
 
 	public boolean isActualPage() {
+		waitLoadLeiloesPage();
 		return browser.getCurrentUrl().equals(URL__LEILOES);
+	}
+	
+	public void waitLoadLeiloesPage() {
+		WebDriverWait wait = new WebDriverWait(browser, 2);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[contains(text(),'Todos leilões']")));
 	}
 	
 }
