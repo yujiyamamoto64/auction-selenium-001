@@ -9,7 +9,7 @@ import br.com.alura.leilao.PageObject;
 public class LeiloesPage extends PageObject{
 
 	private static final String URL_REGISTER_LEILAO = "http://localhost:8080/leiloes/new";
-	private static final Object URL__LEILOES =  "http://localhost:8080/leiloes";
+	private static final Object URL__LEILOES = "http://localhost:8080/leiloes";
 
 	public LeiloesPage(WebDriver browser) {
 		super(browser);
@@ -19,8 +19,6 @@ public class LeiloesPage extends PageObject{
 		this.browser.navigate().to(URL_REGISTER_LEILAO);
 		return new RegisterLeilaoPage(browser);
 	}
-
-	
 
 	public boolean isLeilaoRegistered(String name, String value, String today) {
 		WebElement tableLine = this.browser.findElement(By.cssSelector("#tabela-leiloes tbody tr:last-child"));
@@ -36,5 +34,5 @@ public class LeiloesPage extends PageObject{
 	public boolean isActualPage() {
 		return browser.getCurrentUrl().equals(URL__LEILOES);
 	}
-
+	
 }
