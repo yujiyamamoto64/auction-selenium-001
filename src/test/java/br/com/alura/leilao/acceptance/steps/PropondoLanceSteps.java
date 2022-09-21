@@ -10,6 +10,7 @@ import br.com.alura.leilao.model.Leilao;
 import br.com.alura.leilao.model.Usuario;
 import io.cucumber.java.Before;
 import io.cucumber.java.pt.Dado;
+import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
 
@@ -79,5 +80,11 @@ public class PropondoLanceSteps {
 	@Então("o lance nao eh aceito")
 	public void o_lance_nao_eh_aceito() {
 		Assert.assertEquals(0, leilao.getLances().size());
+	}
+	
+	@Entao("o segundo lance nao eh aceito")
+	public void o_segundo_lance_nao_eh_aceito() {
+		Assert.assertEquals(1, leilao.getLances().size());
+		Assert.assertEquals(this.lista.get(0).getValor(), leilao.getLances().get(0).getValor());
 	}
 }
