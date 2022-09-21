@@ -2,6 +2,8 @@ package br.com.alura.leilao.acceptance.steps;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 
@@ -86,5 +88,24 @@ public class PropondoLanceSteps {
 	public void o_segundo_lance_nao_eh_aceito() {
 		Assert.assertEquals(1, leilao.getLances().size());
 		Assert.assertEquals(this.lista.get(0).getValor(), leilao.getLances().get(0).getValor());
+	}
+	
+	@Dado("dois lances")
+	public void dois_lances(io.cucumber.datatable.DataTable dataTable) {
+	    // Write code here that turns the phrase above into concrete actions
+	    // For automatic transformation, change DataTable to one of
+	    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+	    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+	    // Double, Byte, Short, Long, BigInteger or BigDecimal.
+	    //
+	    // For other transformations you can register a DataTableType.
+		
+		List<Map<String, String>> valores = dataTable.asMaps();
+		for (Map<String, String> mapa : valores) {
+			String valor = mapa.get("valor");
+			String nome = mapa.get("nomeUsuario");
+			Lance lance = new Lance(new Usuario(nome), new BigDecimal(valor));
+			lista.add(lance);
+		}
 	}
 }

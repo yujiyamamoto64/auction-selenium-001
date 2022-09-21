@@ -24,7 +24,9 @@ Funcionalidade: Propondo lances ao leilao
   	| -1.0    | cigano |
   	
   Cenário: Propondo uma sequencia de lances
-  	Dado um lance de 10.0 reais do usuario "fulano"
-  	E um lance de 15.0 reais do usuario "fulano"
+  	Dado dois lances
+  		| valor   | nomeUsuario |
+  	  |  10.0   | beltrano |
+  	  |  15.0   | beltrano |
   	Quando propoe varios lances ao leilao
   	Entao o segundo lance nao eh aceito
